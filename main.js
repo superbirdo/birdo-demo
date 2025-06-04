@@ -1,6 +1,28 @@
-// --- Troubleshooter Data ---
+// --- General Troubleshooting Steps (shared) ---
 
-// Tap & Chip Troubleshooter
+const generalTroubleshootingSteps = [
+  { html: `<ol>
+    <li>Verify that you <a href="https://help.shopify.com/en/manual/sell-in-person/hardware/card-readers/tap-chip/overview" target="_blank">meet the requirements</a> to use the card reader.</li>
+    <li>Verify that you have an internet connection. Shopify POS needs to connect to the internet through Wi-Fi or your device's cellular data to process payments. If you can't connect to the internet, then you need to use a different payment type during the time you're offline.</li>
+    <li>Verify that the card reader is listed as a connected device in the POS app by tapping the connectivity icon in the navigation. If the card reader isn't connected, then <a href="https://help.shopify.com/en/manual/sell-in-person/hardware/card-readers/tap-chip/set-up#pair" target="_blank">pair the card reader</a> with your device.</li>
+    <li>Make sure <a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos/troubleshooting#make-sure-that-your-software-is-up-to-date" target="_blank">the Shopify POS app is up to date</a>.</li>
+    <li>Make sure that your device is up to date:
+      <ul>
+        <li><b>iOS:</b> Go to <b>Settings &gt; General &gt; Software Update</b>. If there's an update available, tap Update now.</li>
+        <li><b>Android:</b> Go to <b>Settings &gt; Software update</b>. If there's an update available, follow the on-screen instructions to install it.</li>
+      </ul>
+    </li>
+    <li><a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos/setting-up-your-network-for-shopify-pos#firewall-settings" target="_blank">Check your firewall settings</a>.</li>
+    <li>If the reader requires a software update, and the reader doesn't have at least 50% of its battery charged, then the reader won't connect to Shopify POS. Connect the reader's charger and allow it to charge to at least 50% of its battery before reconnecting the reader to Shopify POS.</li>
+    <li>Verify that your device has <a href="https://help.shopify.com/en/manual/sell-in-person/hardware/card-readers/tap-chip/security-features" target="_blank">location services</a> turned on and that the Shopify POS app has the necessary permissions to access your device's location.</li>
+    <li>Verify that Bluetooth on your Shopify POS device is turned on.</li>
+    <li>Verify that the POS app has permission to connect to Bluetooth in your device settings.</li>
+    <li>Perform a pinhole reset of your reader. The pinhole is located next to the charging port on your reader. Wait for the card reader's status lights to blink 4 times to indicate that the reader is connected.</li>
+  </ol>` }
+];
+
+// --- Tap & Chip Troubleshooter ---
+
 const tapChipIssues = [
   { label: 'Pairing issues', issue: 'pairing' },
   { label: 'Connection issues', issue: 'connection' },
@@ -8,20 +30,6 @@ const tapChipIssues = [
   { label: 'Payment acceptance issues', issue: 'payment' },
   { label: 'Chip card issues', issue: 'chip' },
   { label: 'Tamper/two red lights', issue: 'tamper' }
-];
-
-const tapChipGeneral = [
-  { html: '<b>1.</b> Verify that you <a href="https://help.shopify.com/en/manual/sell-in-person/hardware/card-readers/tap-chip/overview" target="_blank">meet the requirements</a> to use the Tap & Chip Card Reader.' },
-  { html: '<b>2.</b> Verify that you have an internet connection. Shopify POS needs to connect to the internet through Wi-Fi or your device\'s cellular data to process payments. If you can\'t connect to the internet, then you need to use a different payment type during the time you\'re offline.' },
-  { html: '<b>3.</b> Verify that the card reader is listed as a connected device in the POS app by tapping the connectivity icon in the navigation. If the card reader isn\'t connected, then <a href="https://help.shopify.com/en/manual/sell-in-person/hardware/card-readers/tap-chip/set-up#pair" target="_blank">pair the card reader</a> with your device.' },
-  { html: '<b>4.</b> Make sure <a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos/troubleshooting#make-sure-that-your-software-is-up-to-date" target="_blank">the Shopify POS app is up to date</a>.' },
-  { html: '<b>5.</b> Make sure that your device is up to date:<ul><li><b>iOS:</b> Go to Settings &gt; General &gt; Software Update. If there\'s an update available, tap Update now.</li><li><b>Android:</b> Go to Settings &gt; Software update. If there\'s an update available, follow the on-screen instructions to install it.</li></ul>' },
-  { html: '<b>6.</b> <a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos/setting-up-your-network-for-shopify-pos#firewall-settings" target="_blank">Check your firewall settings</a>.' },
-  { html: '<b>7.</b> If the reader requires a software update, and the reader doesn\'t have at least 50% of its battery charged, then the reader won\'t connect to Shopify POS. Connect the reader\'s charger and allow it to charge to at least 50% of its battery before reconnecting the reader to Shopify POS.' },
-  { html: '<b>8.</b> Verify that your device has <a href="https://help.shopify.com/en/manual/sell-in-person/hardware/card-readers/tap-chip/security-features" target="_blank">location services</a> turned on and that the Shopify POS app has the necessary permissions to access your device\'s location.' },
-  { html: '<b>9.</b> Verify that Bluetooth on your Shopify POS device is turned on.' },
-  { html: '<b>10.</b> Verify that the POS app has permission to connect to Bluetooth in your device settings.' },
-  { html: '<b>11.</b> Perform a pinhole reset of your reader. The pinhole is located next to the charging port on your reader. Wait for the card reader\'s status lights to blink 4 times to indicate that the reader is connected.' }
 ];
 
 const tapChipIssueSpecific = {
@@ -57,7 +65,7 @@ const tapChipIssueSpecific = {
       { html: 'Make sure the reader is plugged into a power source and its battery is charged to at least 50% of its capacity.' },
       { html: 'Make sure you use the latest version of Shopify POS and that your device is connected to internet.' },
       { html: '<a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos/troubleshooting#force-close-the-shopify-pos-app" target="_blank">Force close the POS app</a> and re-open it.' },
-      { html: 'From Shopify POS, <a href="https://help.shopify.com/en/manual/sell-in-person/hardware/card-readers/tap-chip/set-up" target="_blank">unpair</a> the card reader, and then <a href="https://help.shopify.com/en/manual/sell-in-person/hardware/card-readers/tap-chip/set-up" target="_blank">pair</a> the card reader to Shopify POS again.' },
+      { html: 'From Shopify POS, <a href="https://help.shopify.com/en/manual/sell-in-person/hardware/card-readers/tap-chip/set-up#unpair" target="_blank">unpair</a> the card reader, and then <a href="https://help.shopify.com/en/manual/sell-in-person/hardware/card-readers/tap-chip/set-up#pair" target="_blank">pair</a> the card reader to Shopify POS again.' },
       { html: 'Restart the card reader update.' }
     ]
   },
@@ -90,8 +98,10 @@ const tapChipIssueSpecific = {
     ]
   }
 };
+const tapChipGeneral = generalTroubleshootingSteps;
 
-// WisePad 3 Troubleshooter
+// --- WisePad 3 Troubleshooter ---
+
 const wisepad3Issues = [
   { label: 'Pairing issues', issue: 'pairing' },
   { label: 'Connection issues', issue: 'connection' },
@@ -99,18 +109,6 @@ const wisepad3Issues = [
   { label: 'Over-the-air update issues', issue: 'ota' },
   { label: 'Payment acceptance issues', issue: 'payment' },
   { label: 'Chip card issues', issue: 'chip' }
-];
-
-const wisepad3General = [
-  { html: '<b>1.</b> Ensure the WisePad 3 is charged and turned on.' },
-  { html: '<b>2.</b> Ensure Bluetooth is enabled on your device.' },
-  { html: '<b>3.</b> Ensure the POS app is up to date.' },
-  { html: '<b>4.</b> Ensure your device is up to date.' },
-  { html: '<b>5.</b> Ensure the WisePad 3 is within range (less than 10 meters) of your device.' },
-  { html: '<b>6.</b> Ensure the WisePad 3 is not paired with another device.' },
-  { html: '<b>7.</b> Restart both the WisePad 3 and your device.' },
-  { html: '<b>8.</b> Forget the WisePad 3 in Bluetooth settings and re-pair.' },
-  { html: '<b>9.</b> <a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos/setting-up-your-network-for-shopify-pos#firewall-settings" target="_blank">Check your firewall settings</a>.' }
 ];
 
 const wisepad3IssueSpecific = {
@@ -164,8 +162,10 @@ const wisepad3IssueSpecific = {
     ]
   }
 };
+const wisepad3General = generalTroubleshootingSteps;
 
-// POS Terminal Troubleshooter
+// --- POS Terminal Troubleshooter ---
+
 const posTerminalIssues = [
   { label: 'Lost connection and no QR code showing', issue: 'lostConnection' },
   { label: 'List of items too long to display', issue: 'itemListLong' },
@@ -174,16 +174,6 @@ const posTerminalIssues = [
   { label: "POS Terminal isn't charging", issue: 'notCharging' },
   { label: 'Battery is swollen or needs replacement', issue: 'battery' }
 ];
-
-const posTerminalGeneral = [
-  { html: '<b>1.</b> Make sure you’re running the latest version of the POS app (<b>v8.16 or later</b>).' },
-  { html: '<b>2.</b> Make sure both devices (POS Terminal and POS device/tablet) are on the same network:<ul><li>If both are on Wi-Fi, they must be on the same Wi-Fi network.</li><li>If POS Terminal is connected with Ethernet, it must be connected to the same network as the POS device using your router.</li></ul>' },
-  { html: '<b>3.</b> Both devices unpair when your POS device locks, is rebooting, or you close the POS app on your POS device. Connection should re-establish automatically as long as the POS app is running and it\'s displayed on the screen.' },
-  { html: '<b>4.</b> <a href="https://help.shopify.com/en/manual/sell-in-person/shopify-pos/setting-up-your-network-for-shopify-pos" target="_blank">Ensure your network is set up to use the Shopify POS app</a>.' },
-  { html: '<b>5.</b> Reset your router.' },
-  { html: '<b>6.</b> You can also try temporarily connecting both devices to a different network, such as a Wi-Fi hotspot on a smartphone. If the connection succeeds on a different network, then this indicates that the network might not be set up to allow POS and POS Terminal to communicate with each other. Ensure your network meets the <a href="https://help.shopify.com/en/manual/sell-in-person/hardware/card-readers/pos-terminal/setup#network-requirements" target="_blank">networking requirements</a>.' }
-];
-
 const posTerminalIssueSpecific = {
   lostConnection: {
     step: 'Lost connection and no QR code showing',
@@ -226,6 +216,7 @@ const posTerminalIssueSpecific = {
     ]
   }
 };
+const posTerminalGeneral = generalTroubleshootingSteps;
 
 // --- Troubleshooter Logic ---
 
@@ -235,21 +226,24 @@ const models = [
     key: 'tapchip',
     issues: tapChipIssues,
     general: tapChipGeneral,
-    issueSpecific: tapChipIssueSpecific
+    issueSpecific: tapChipIssueSpecific,
+    skipGeneralFor: ['tamper']
   },
   {
     label: 'WisePad 3 card reader',
     key: 'wisepad3',
     issues: wisepad3Issues,
     general: wisepad3General,
-    issueSpecific: wisepad3IssueSpecific
+    issueSpecific: wisepad3IssueSpecific,
+    skipGeneralFor: ['tamper']
   },
   {
     label: 'POS Terminal card reader',
     key: 'posterminal',
     issues: posTerminalIssues,
     general: posTerminalGeneral,
-    issueSpecific: posTerminalIssueSpecific
+    issueSpecific: posTerminalIssueSpecific,
+    skipGeneralFor: []
   }
 ];
 
@@ -368,7 +362,12 @@ function renderIssueSelector() {
     btn.textContent = issue.label;
     btn.onclick = () => {
       currentIssue = issue.issue;
-      renderGeneralTroubleshooting();
+      // If this issue is in skipGeneralFor, go straight to issue-specific
+      if (currentModel.skipGeneralFor && currentModel.skipGeneralFor.includes(currentIssue)) {
+        renderIssueSpecific();
+      } else {
+        renderGeneralTroubleshooting();
+      }
     };
     optionsDiv.appendChild(btn);
   }
