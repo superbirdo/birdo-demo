@@ -294,14 +294,9 @@ function renderStep(stepObj) {
       btn.onclick = () => {
         history.push({ stepObj, selected: opt });
         if (typeof opt.next === 'function') {
-          // If the function returns undefined, call it for side effect (like renderModelSelector)
-          const result = opt.next(opt.issue);
-          if (result) renderStep(result);
+          opt.next();
         } else if (typeof opt.next === 'object') {
           renderStep(opt.next);
-        } else if (opt.issue) {
-          currentIssue = opt.issue;
-          renderGeneralTroubleshooting();
         }
       };
       optionsDiv.appendChild(btn);
@@ -389,44 +384,72 @@ function renderIssueSelector() {
 
 // General troubleshooting
 function renderGeneralTroubleshooting() {
-  const stepObj = {
+  renderStep({
     step: 'General troubleshooting steps',
     instructions: currentModel.general,
     options: [
-      { label: 'This resolved my issue', next: { step: 'Troubleshooting complete!', instructions: [], options: [
-        { label: 'Start over', next: () => renderModelSelector() }
-      ] } },
-      { label: 'This did not resolve the issue', next: () => {
-        // Go to issue-specific troubleshooting
-        const issueObj = currentModel.issueSpecific[currentIssue];
-        if (issueObj) {
-          renderStep({
-            step: issueObj.step,
-            instructions: issueObj.instructions,
-            options: [
-              { label: 'This resolved my issue', next: { step: 'Troubleshooting complete!', instructions: [], options: [
-                { label: 'Start over', next: () => renderModelSelector() }
-              ] } },
-              { label: 'This did not resolve the issue', next: { step: 'Contact Shopify Support', instructions: [
-                'Please contact Shopify Support for further assistance.'
-              ], options: [
-                { label: 'Start over', next: () => renderModelSelector() }
-              ] } }
-            ]
-          });
-        } else {
-          renderStep({
-            step: 'Contact Shopify Support',
-            instructions: ['We could not find steps for this issue. Please contact Shopify Support.'],
-            options: [
-              { label: 'Start over', next: () => renderModelSelector() }
-            ]
-          });
-        }
-      } }
+      { label: 'This resolved my issue', next: () => renderStep({
+        step: 'Troubleshooting complete!',
+        instructions: [],
+        options: [
+          { label: 'Start over', next: renderModelSelector }
+        ]
+      }) },
+      { label: 'This did not resolve the issue', next: renderIssueSpecific }
     ]
-  };
-  renderStep(stepObj);
+  });
+}
+
+// Issue-specific troubleshooting
+function renderIssueSpecific() {
+  const issueObj = currentModel.issueSpecific[currentIssue];
+  if (!issueObj) {
+    renderStep({
+      step: 'Contact Shopify Support',
+      instructions: ['We could not find steps for this issue. Please contact Shopify Support.'],
+      options: [
+        { label: 'Start over', next: renderModelSelector }
+      ]
+    });
+    return;
+  }
+  // Special case: some issues only have "OK, understood"
+  let onlyOk = (
+    issueObj.step === 'Had to log in again after undocking' ||
+    issueObj.step === 'Battery is swollen or needs replacement' ||
+    issueObj.step === 'System Tampered error' ||
+    issueObj.step === 'Tamper/two red lights'
+  );
+  renderStep({
+    step: issueObj.step,
+    instructions: issueObj.instructions,
+    options: onlyOk
+      ? [
+          { label: 'OK, understood', next: () => renderStep({
+            step: 'Troubleshooting complete!',
+            instructions: [],
+            options: [
+              { label: 'Start over', next: renderModelSelector }
+            ]
+          }) }
+        ]
+      : [
+          { label: 'This resolved my issue', next: () => renderStep({
+            step: 'Troubleshooting complete!',
+            instructions: [],
+            options: [
+              { label: 'Start over', next: renderModelSelector }
+            ]
+          }) },
+          { label: 'This did not resolve the issue', next: () => renderStep({
+            step: 'Contact Shopify Support',
+            instructions: ['Please contact Shopify Support for further assistance.'],
+            options: [
+              { label: 'Start over', next: renderModelSelector }
+            ]
+          }) }
+        ]
+  });
 }
 
 // Start the troubleshooter
